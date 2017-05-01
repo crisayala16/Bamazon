@@ -9,6 +9,7 @@ var connection = mysql.createConnection({
 	database: 'bamazon'
 });
 function listMenu(){
+	//Prompts the user with a list of menu options
 	inquirer.prompt([
 	{
 		name: 'action',
@@ -17,6 +18,7 @@ function listMenu(){
 		choices: ['View products for sale', 'View low inventory', 'Add to Inventory', 'Add New Product']
 	}
 	]).then(function(answer){
+		//Displays all the items in the products table
 		if(answer.action === 'View products for sale'){
 			connection.query('SELECT * FROM products', function(err, res){
 				if(err) throw err;
@@ -30,6 +32,7 @@ function listMenu(){
 				listMenu();
 			});
 		}
+		//Displays the items that are low on stock
 		else if(answer.action === 'View low inventory'){
 			connection.query('SELECT * FROM products', function(err, res){
 				if(err) throw err;
@@ -42,6 +45,7 @@ function listMenu(){
 				listMenu();
 			})
 		}
+		//Allows the user to add more inventory to a specific item
 		else if(answer.action === 'Add to Inventory'){
 			inquirer.prompt([
 			{
@@ -69,6 +73,7 @@ function listMenu(){
 				
 			})
 		}
+		//Allows the user to add a new item to the table
 		else if(answer.action === 'Add New Product'){
 			inquirer.prompt([
 			{
